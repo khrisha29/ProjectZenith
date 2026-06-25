@@ -8,7 +8,6 @@ const nextConfig: NextConfig = {
   },
   // Silence Turbopack error (we use a custom webpack config)
   turbopack: {},
-  eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
   webpack: (config, { isServer, webpack }) => {
     // Copying Cesium assets is now handled by the pre-build script (copy-cesium.js)
@@ -34,6 +33,12 @@ const nextConfig: NextConfig = {
       fs: false,
       module: false,
       worker_threads: false,
+    };
+
+    // Exclude @spz-loader/core from bundling since SPZ models are not used
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@spz-loader/core': false,
     };
 
     // Strip "node:" scheme so webpack treats them as standard modules (which are then false in fallback)
