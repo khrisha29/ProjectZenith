@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node copy-cesium.js && NODE_OPTIONS='--max-old-space-size=4096' next build --no-turbo",
+    "build": "node copy-cesium.js && NODE_OPTIONS='--max-old-space-size=4096' next build",
     "start": "next start",
     "lint": "next lint"
   },
