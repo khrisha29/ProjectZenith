@@ -3,7 +3,6 @@
 import React, { Suspense, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { ScrollControls, Stars, useScroll } from '@react-three/drei';
-import * as THREE from 'three';
 import { TemporalCorridor } from './TemporalCorridor';
 import { OrbitalEarthStage } from './OrbitalEarthStage';
 import { CheckpointOverlay } from './CheckpointOverlay';

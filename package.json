@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node copy-cesium.js && NODE_OPTIONS='--max-old-space-size=4096' next build",
+    "build": "node copy-cesium.js && next build --webpack",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

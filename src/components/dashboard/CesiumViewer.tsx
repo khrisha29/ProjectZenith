@@ -1,7 +1,16 @@
 "use client";
 
 import { useEffect, useRef } from 'react';
-import * as Cesium from 'cesium';
+import { 
+  Ion, 
+  Viewer as CesiumViewerType, 
+  Cartesian2, 
+  Cartesian3, 
+  Math as CesiumMath, 
+  Color, 
+  LabelStyle, 
+  VerticalOrigin 
+} from 'cesium';
 import { Viewer, Entity, PointGraphics, LabelGraphics } from 'resium';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 import { env } from '@/lib/config';
@@ -9,7 +18,7 @@ import { env } from '@/lib/config';
 // Set Cesium Base URL
 if (typeof window !== 'undefined') {
   (window as unknown as { CESIUM_BASE_URL: string }).CESIUM_BASE_URL = '/cesium';
-  Cesium.Ion.defaultAccessToken = env.NEXT_PUBLIC_CESIUM_ION_TOKEN;
+  Ion.defaultAccessToken = env.NEXT_PUBLIC_CESIUM_ION_TOKEN;
 }
 
 interface Props {
@@ -22,15 +31,15 @@ export default function CesiumViewer({ coordinates, issPosition }: Props) {
 
   useEffect(() => {
     if (viewerRef.current?.cesiumElement) {
-      const viewer = viewerRef.current.cesiumElement as Cesium.Viewer;
+      const viewer = viewerRef.current.cesiumElement as CesiumViewerType;
       
       // Fly to user location smoothly
       viewer.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(coordinates.lon, coordinates.lat, 10000000),
+        destination: Cartesian3.fromDegrees(coordinates.lon, coordinates.lat, 10000000),
         duration: 3,
         orientation: {
           heading: 0.0,
-          pitch: -Cesium.Math.PI_OVER_TWO,
+          pitch: -CesiumMath.PI_OVER_TWO,
           roll: 0.0
         }
       });
@@ -62,31 +71,31 @@ export default function CesiumViewer({ coordinates, issPosition }: Props) {
     >
       
       {/* User Location */}
-      <Entity position={Cesium.Cartesian3.fromDegrees(coordinates.lon, coordinates.lat)}>
-        <PointGraphics pixelSize={15} color={Cesium.Color.CYAN} outlineColor={Cesium.Color.WHITE} outlineWidth={2} />
+      <Entity position={Cartesian3.fromDegrees(coordinates.lon, coordinates.lat)}>
+        <PointGraphics pixelSize={15} color={Color.CYAN} outlineColor={Color.WHITE} outlineWidth={2} />
         <LabelGraphics 
           text="YOU ARE HERE" 
           font="12pt monospace" 
-          fillColor={Cesium.Color.WHITE}
-          style={Cesium.LabelStyle.FILL_AND_OUTLINE}
+          fillColor={Color.WHITE}
+          style={LabelStyle.FILL_AND_OUTLINE}
           outlineWidth={2}
-          verticalOrigin={Cesium.VerticalOrigin.BOTTOM}
-          pixelOffset={new Cesium.Cartesian2(0, -20)}
+          verticalOrigin={VerticalOrigin.BOTTOM}
+          pixelOffset={new Cartesian2(0, -20)}
         />
       </Entity>
 
       {/* ISS Location */}
       {issPosition && (
-        <Entity position={Cesium.Cartesian3.fromDegrees(issPosition.longitude, issPosition.latitude, 400000)}>
-          <PointGraphics pixelSize={10} color={Cesium.Color.RED} outlineColor={Cesium.Color.WHITE} outlineWidth={2} />
+        <Entity position={Cartesian3.fromDegrees(issPosition.longitude, issPosition.latitude, 400000)}>
+          <PointGraphics pixelSize={10} color={Color.RED} outlineColor={Color.WHITE} outlineWidth={2} />
           <LabelGraphics 
             text="ISS" 
             font="14pt monospace" 
-            fillColor={Cesium.Color.RED}
-            style={Cesium.LabelStyle.FILL_AND_OUTLINE}
+            fillColor={Color.RED}
+            style={LabelStyle.FILL_AND_OUTLINE}
             outlineWidth={2}
-            verticalOrigin={Cesium.VerticalOrigin.BOTTOM}
-            pixelOffset={new Cesium.Cartesian2(0, -20)}
+            verticalOrigin={VerticalOrigin.BOTTOM}
+            pixelOffset={new Cartesian2(0, -20)}
           />
         </Entity>
       )}

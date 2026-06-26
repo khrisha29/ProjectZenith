@@ -16,7 +16,7 @@ export function HeroSection() {
           playsInline
           className="object-cover w-full h-full scale-105" // scale slightly to allow for parallax if needed
         >
-          <source src="/video.mp4" type="video/mp4" />
+          <source src="/video.MP4" type="video/mp4" />
           {/* Fallback gradient if video fails or is loading */}
         </video>
         {/* Dark overlay for text readability - rgba(0,0,0,0.55) */}

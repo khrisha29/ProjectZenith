@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Html, Grid } from '@react-three/drei';
-import * as THREE from 'three';
 
 export function ObservationRoom() {
   return (

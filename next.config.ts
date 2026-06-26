@@ -7,8 +7,9 @@ const nextConfig: NextConfig = {
     // Suppress the "cannot use import statement" error from satellite.js wasm workers
   },
   // Silence Turbopack error (we use a custom webpack config)
-  turbopack: {},
-  eslint: { ignoreDuringBuilds: true },
+  turbopack: {
+    root: path.resolve(__dirname),
+  },
   typescript: { ignoreBuildErrors: true },
   webpack: (config, { isServer, webpack }) => {
     // Copying Cesium assets is now handled by the pre-build script (copy-cesium.js)
@@ -34,6 +35,11 @@ const nextConfig: NextConfig = {
       fs: false,
       module: false,
       worker_threads: false,
+    };
+
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@spz-loader/core': path.resolve(__dirname, 'stubs/spz-loader-stub.js'),
     };
 
     // Strip "node:" scheme so webpack treats them as standard modules (which are then false in fallback)

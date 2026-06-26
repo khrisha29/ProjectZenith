@@ -655,10 +655,9 @@ export default function IntelligencePanel({
       {/* About / Dossier Flashcard */}
       <motion.div
         layout
-        onClick={() => setActiveLensCard(activeLensCard === 4 ? null : 4)}
         className="bg-white/60 backdrop-blur-md border border-black/5 rounded-2xl p-6 hover:border-[#0d9488]/40 hover:bg-[#0d9488]/5 transition-all shadow-lg cursor-pointer group shrink-0"
       >
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between" onClick={() => setActiveLensCard(prev => (prev === 4 ? null : 4))}>
           <div className="flex items-center gap-2">
             <Info className="w-5 h-5 text-slate-700 font-bold group-hover:text-teal-700 font-bold transition-colors" />
             <h4 className="font-mono text-xs tracking-widest text-slate-700 font-bold group-hover:text-teal-700 font-bold uppercase transition-colors">About this lens</h4>

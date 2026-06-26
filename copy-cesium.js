@@ -4,7 +4,7 @@ const path = require('path');
 const cesiumSource = path.join(__dirname, 'node_modules', 'cesium', 'Build', 'Cesium');
 const cesiumDest = path.join(__dirname, 'public', 'cesium');
 
-const dirsToCopy = ['Workers', 'ThirdParty', 'Assets', 'Widgets'];
+const dirsToCopy = ['Workers', 'ThirdParty', 'Assets'];
 
 dirsToCopy.forEach(dir => {
   const src = path.join(cesiumSource, dir);

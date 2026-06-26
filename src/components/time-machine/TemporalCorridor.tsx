@@ -2,17 +2,17 @@
 
 import React, { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import * as THREE from 'three';
+import { InstancedMesh, Object3D } from 'three';
 import { TUNNEL_LENGTH } from './TimeMachineScene';
 
 export function TemporalCorridor() {
-  const ringsRef = useRef<THREE.InstancedMesh>(null);
+  const ringsRef = useRef<InstancedMesh>(null);
   const numRings = 40;
 
   // Generate transformation matrices for the background tunnel rings
   const ringMatrices = useMemo(() => {
     const matrices = [];
-    const tempObject = new THREE.Object3D();
+    const tempObject = new Object3D();
     
     for (let i = 0; i < numRings; i++) {
       // Distribute rings evenly along the tunnel

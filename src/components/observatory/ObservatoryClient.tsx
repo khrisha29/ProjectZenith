@@ -199,6 +199,12 @@ export default function ObservatoryClient() {
 
   // Console Clear / Close handler
   const handleClearSelection = useCallback(() => {
+    // If Orbital Lens is active, closing it takes priority
+    if (isLensActive) {
+      setIsLensActive(false);
+      setLensLoading(false);
+      return;
+    }
     setIsTrackingSatellite(false);
     if (consoleMode === 'satellite' || consoleMode === 'iss') {
       setSelectedSatelliteId(null);
@@ -214,7 +220,7 @@ export default function ObservatoryClient() {
       setTelemetry(null);
       setConsoleMode('default');
     }
-  }, [consoleMode, selectedLocation]);
+  }, [consoleMode, isLensActive, selectedLocation]);
 
   // Handle Intelligence Panel Quick Actions
   const handlePanelAction = useCallback((action: 'center' | 'toggle-trail') => {

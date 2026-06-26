@@ -1,7 +1,74 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef } from "react";
-import * as Cesium from "cesium";
+import { 
+  Viewer, 
+  CustomDataSource, 
+  Entity, 
+  JulianDate, 
+  Cartesian3, 
+  ScreenSpaceEventHandler, 
+  defined, 
+  Cartographic, 
+  Math as CesiumMath, 
+  ScreenSpaceEventType, 
+  SampledPositionProperty, 
+  ExtrapolationType, 
+  Color, 
+  LabelStyle, 
+  VerticalOrigin, 
+  Cartesian2, 
+  ConstantProperty, 
+  SingleTileImageryProvider, 
+  Rectangle, 
+  ImageryLayer, 
+  PolylineDashMaterialProperty, 
+  ArcType, 
+  CallbackProperty, 
+  ColorMaterialProperty,
+  Ion
+} from 'cesium';
+
+// Local Cesium mapping for value usage to allow tree-shaking
+const Cesium = {
+  Viewer, 
+  CustomDataSource, 
+  Entity, 
+  JulianDate, 
+  Cartesian3, 
+  ScreenSpaceEventHandler, 
+  defined, 
+  Cartographic, 
+  Math: CesiumMath, 
+  ScreenSpaceEventType, 
+  SampledPositionProperty, 
+  ExtrapolationType, 
+  Color, 
+  LabelStyle, 
+  VerticalOrigin, 
+  Cartesian2, 
+  ConstantProperty, 
+  SingleTileImageryProvider, 
+  Rectangle, 
+  ImageryLayer, 
+  PolylineDashMaterialProperty, 
+  ArcType, 
+  CallbackProperty, 
+  ColorMaterialProperty,
+  Ion
+};
+
+// Merged namespace for type annotations
+namespace Cesium {
+  export type Viewer = import('cesium').Viewer;
+  export type CustomDataSource = import('cesium').CustomDataSource;
+  export type Entity = import('cesium').Entity;
+  export type ScreenSpaceEventHandler = import('cesium').ScreenSpaceEventHandler;
+  export type Cartesian2 = import('cesium').Cartesian2;
+  export type Cartesian3 = import('cesium').Cartesian3;
+  export type SampledPositionProperty = import('cesium').SampledPositionProperty;
+  export type ImageryLayer = import('cesium').ImageryLayer;
+}
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import { env } from "@/lib/config";
 import { SatelliteCategory, TleData, LayerPayload } from "@/lib/satellites";

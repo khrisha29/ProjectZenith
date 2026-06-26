@@ -3,15 +3,15 @@
 import React, { useRef, useMemo } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useScroll } from '@react-three/drei';
-import * as THREE from 'three';
+import { Group, Points, PointsMaterial, MathUtils, Color, AdditiveBlending } from 'three';
 import { COSMIC_TIME_MACHINE_YEARS } from '@/lib/timeMachineData';
 
 export function OrbitalEarthStage() {
   const scroll = useScroll();
   const { camera } = useThree();
-  const earthGroupRef = useRef<THREE.Group>(null);
-  const particlesRef = useRef<THREE.Points>(null);
-  const materialRef = useRef<THREE.PointsMaterial>(null);
+  const earthGroupRef = useRef<Group>(null);
+  const particlesRef = useRef<Points>(null);
+  const materialRef = useRef<PointsMaterial>(null);
 
   // Pre-generate 58,000 random particle positions around the Earth (radius ~2 to ~4)
   const maxParticles = 58000;
@@ -39,7 +39,7 @@ export function OrbitalEarthStage() {
     earthGroupRef.current.rotation.y += delta * 0.05;
 
     // Interpolate data based on scroll
-    const safeOffset = THREE.MathUtils.clamp(scroll.offset, 0, 1);
+    const safeOffset = MathUtils.clamp(scroll.offset, 0, 1);
     const numCheckpoints = COSMIC_TIME_MACHINE_YEARS.length;
     
     // Find which two checkpoints we are between
@@ -52,7 +52,7 @@ export function OrbitalEarthStage() {
     const data2 = COSMIC_TIME_MACHINE_YEARS[index2];
 
     // Lerp Active Satellites
-    const currentActive = THREE.MathUtils.lerp(data1.activeSatellites, data2.activeSatellites, t);
+    const currentActive = MathUtils.lerp(data1.activeSatellites, data2.activeSatellites, t);
     
     // Update visible particle count based on active satellites (cap at maxParticles)
     particlesRef.current.geometry.setDrawRange(0, Math.min(Math.floor(currentActive), maxParticles));
@@ -62,11 +62,11 @@ export function OrbitalEarthStage() {
     particlesRef.current.rotation.x += delta * 0.02;
 
     // Lerp Visual Intensity (0-100)
-    const currentIntensity = THREE.MathUtils.lerp(data1.visualIntensity, data2.visualIntensity, t);
+    const currentIntensity = MathUtils.lerp(data1.visualIntensity, data2.visualIntensity, t);
     
     // Lerp Color from calm blue to warning red based on intensity
-    const color1 = new THREE.Color('#00E5FF'); // Calm Cyan
-    const color2 = new THREE.Color('#FF3333'); // Aggressive Red
+    const color1 = new Color('#00E5FF'); // Calm Cyan
+    const color2 = new Color('#FF3333'); // Aggressive Red
     
     // Normalize intensity (0 to 100) to (0 to 1)
     const colorT = Math.pow(currentIntensity / 100, 2); // Non-linear curve so it gets redder faster at the end
@@ -105,6 +105,7 @@ export function OrbitalEarthStage() {
             count={positions.length / 3}
             array={positions}
             itemSize={3}
+            args={[positions, 3]}
           />
         </bufferGeometry>
         <pointsMaterial 
@@ -113,7 +114,7 @@ export function OrbitalEarthStage() {
           color="#00E5FF" 
           transparent 
           opacity={0.8}
-          blending={THREE.AdditiveBlending}
+          blending={AdditiveBlending}
           depthWrite={false}
         />
       </points>
