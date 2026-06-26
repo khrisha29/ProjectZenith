@@ -11,7 +11,7 @@
 
 **Zenith** lets you explore what's happening above *any* location on Earth — right now — through a cinematic 3D globe, live satellite tracking, sky-condition intelligence, and orbital congestion analytics.
 
-[https://project-zenith-ochre-ten.vercel.app/] 
+[Live Demo][https://project-zenith-ochre-ten.vercel.app/] 
 
 </div>
 
